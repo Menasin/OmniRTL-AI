@@ -16,8 +16,18 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            storeFile file('omnirtl-release.keystore')
+            storePassword 'OmniRTL2026'
+            keyAlias 'omnirtl'
+            keyPassword 'OmniRTL2026'
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
