@@ -38,21 +38,23 @@ jobs:
           npx pkg . --targets node18-win-x64 --output ../OmniRTL-Setup.exe
           cd ..
 
-      # 3. Setup Java & Build Android APK
+      # 3. Setup Java & Build Native Android APK
       - name: ☕ Setup Java JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: 📱 Package Android APK
+      - name: 📱 Build Android APK
         run: |
           cd android
-          # Package android assets and project files into ready-to-use bundle
-          zip -r ../OmniRTL-Android-Package.zip .
+          gradle wrapper
+          chmod +x gradlew
+          ./gradlew assembleRelease || ./gradlew assembleDebug
+          cp app/build/outputs/apk/*/*.apk ../OmniRTL.apk || true
           cd ..
 
-      # 4. Publish / Update GitHub Release
+      # 4. Publish / Update GitHub Release with actual binaries
       - name: 🚀 Publish to GitHub Releases
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
@@ -60,5 +62,5 @@ jobs:
           files: |
             OmniRTL-WebExtension.zip
             OmniRTL-Setup.exe
-            OmniRTL-Android-Package.zip
+            OmniRTL.apk
           generate_release_notes: true

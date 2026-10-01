@@ -21,5 +21,8 @@
   },
   "dependencies": {
     "@electron/asar": "^3.4.1"
+  },
+  "devDependencies": {
+    "pkg": "^5.8.1"
   }
 }
