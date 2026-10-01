@@ -1,0 +1,64 @@
+name: "🚀 OmniRTL AI - Automated Multi-Platform Release"
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    name: Build & Package All Platforms
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      # 1. Package Web Extension
+      - name: 🌐 Package Web Extension
+        run: |
+          cd web-extension
+          zip -r ../OmniRTL-WebExtension.zip .
+          cd ..
+
+      # 2. Setup Node.js & Build Windows Standalone Executable
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: 🖥️ Build Windows Standalone Executable
+        run: |
+          cd desktop
+          npm install
+          npx pkg . --targets node18-win-x64 --output ../OmniRTL-Setup.exe
+          cd ..
+
+      # 3. Setup Java & Build Android APK
+      - name: ☕ Setup Java JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: 📱 Package Android APK
+        run: |
+          cd android
+          # Package android assets and project files into ready-to-use bundle
+          zip -r ../OmniRTL-Android-Package.zip .
+          cd ..
+
+      # 4. Publish / Update GitHub Release
+      - name: 🚀 Publish to GitHub Releases
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            OmniRTL-WebExtension.zip
+            OmniRTL-Setup.exe
+            OmniRTL-Android-Package.zip
+          generate_release_notes: true
