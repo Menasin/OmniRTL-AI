@@ -1,0 +1,172 @@
+/**
+ * AI RTL Fixer - Content Styles
+ * Applies base typography, code block isolation, and RTL layout adjustments.
+ */
+
+@font-face {
+  font-family: 'VazirmatnLocal';
+  src: url('chrome-extension://__MSG_@@extension_id__/fonts/Vazirmatn-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+}
+
+/* Base RTL Direction Rules */
+[dir="rtl"] {
+  direction: rtl !important;
+  text-align: right !important;
+  unicode-bidi: isolate !important;
+}
+
+[dir="ltr"] {
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: isolate !important;
+}
+
+/* Plaintext fallback for generic paragraphs */
+.ai-rtl-detected {
+  direction: rtl !important;
+  text-align: right !important;
+  unicode-bidi: isolate !important;
+}
+
+.ai-ltr-detected {
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: isolate !important;
+}
+
+/* STRICT LTR FOR CODE, TERMINALS, PRE & MONOSPACE */
+pre,
+code,
+pre *,
+code *,
+kbd,
+samp,
+var,
+.mono,
+.monospace,
+.cm-editor,
+.monaco-editor,
+.hljs,
+.prism,
+[data-testid="code-block"],
+[data-testid="terminal"],
+.terminal,
+.xterm {
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: isolate !important;
+}
+
+/* Preserve inline code inside RTL paragraphs */
+p [dir="rtl"] code,
+[dir="rtl"] p code,
+[dir="rtl"] li code {
+  direction: ltr !important;
+  display: inline-block !important;
+  unicode-bidi: isolate !important;
+  text-align: left !important;
+  margin: 0 3px !important;
+}
+
+/* Math, LaTeX and Formulas Protection */
+.katex,
+.katex-display,
+.katex-html,
+.math,
+.math-inline,
+.math-display {
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: isolate !important;
+}
+
+/* Fix Lists (Bullet points and numbering indentation in RTL) */
+[dir="rtl"] ul,
+[dir="rtl"] ol,
+ul[dir="rtl"],
+ol[dir="rtl"] {
+  padding-left: 0 !important;
+  padding-right: 1.6rem !important;
+  margin-left: 0 !important;
+  margin-right: 0.5rem !important;
+}
+
+[dir="rtl"] ul ul,
+[dir="rtl"] ul ol,
+[dir="rtl"] ol ul,
+[dir="rtl"] ol ol {
+  padding-left: 0 !important;
+  padding-right: 2rem !important;
+}
+
+/* Quotes & Callouts */
+[dir="rtl"] blockquote {
+  border-left: none !important;
+  border-right: 4px solid currentColor !important;
+  padding-left: 0 !important;
+  padding-right: 1rem !important;
+}
+
+/* Trailing punctuation fix (prevent ? / . jumping to beginning) */
+[dir="rtl"] p,
+[dir="rtl"] li,
+[dir="rtl"] span,
+[dir="rtl"] div {
+  text-wrap: pretty;
+}
+
+/* Citation badges in Perplexity / Search */
+[dir="rtl"] [data-testid*="citation"],
+[dir="rtl"] a[href*="#citation"],
+[dir="rtl"] .citation {
+  display: inline-block !important;
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+  margin: 0 4px !important;
+}
+
+/* In-Page Quick Floating Switcher (Alt+R indicator) */
+.ai-rtl-floating-indicator {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 2147483640;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.88);
+  color: #f8fafc;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  direction: ltr !important;
+}
+
+.ai-rtl-floating-indicator:hover {
+  transform: translateY(-2px);
+  border-color: #6366f1;
+  background: rgba(15, 23, 42, 0.98);
+}
+
+.ai-rtl-floating-indicator .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+}
+
+.ai-rtl-floating-indicator.inactive .dot {
+  background: #94a3b8;
+}

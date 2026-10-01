@@ -1,0 +1,82 @@
+{
+  "manifest_version": 3,
+  "name": "AI RTL Fixer - Auto RTL for ChatGPT & Claude",
+  "short_name": "AI RTL Fixer",
+  "version": "1.0.0",
+  "description": "Automatically detect and fix Right-to-Left (RTL) text direction, Persian/Arabic/Hebrew fonts, and isolated code blocks across AI chat interfaces.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "AI RTL Fixer Settings (Alt+R)",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background/service-worker.js"
+  },
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "*://chatgpt.com/*",
+    "*://chat.openai.com/*",
+    "*://claude.ai/*",
+    "*://chat.deepseek.com/*",
+    "*://gemini.google.com/*",
+    "*://www.perplexity.ai/*",
+    "*://perplexity.ai/*",
+    "*://poe.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://chatgpt.com/*",
+        "*://chat.openai.com/*",
+        "*://claude.ai/*",
+        "*://chat.deepseek.com/*",
+        "*://gemini.google.com/*",
+        "*://www.perplexity.ai/*",
+        "*://perplexity.ai/*",
+        "*://poe.com/*"
+      ],
+      "js": [
+        "content/adapters.js",
+        "content/engine.js"
+      ],
+      "css": [
+        "content/styles.css"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "fonts/Vazirmatn-Variable.woff2",
+        "icons/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "commands": {
+    "toggle-rtl": {
+      "suggested_key": {
+        "default": "Alt+R",
+        "mac": "Alt+R"
+      },
+      "description": "Toggle RTL Mode On/Off"
+    }
+  }
+}

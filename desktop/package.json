@@ -1,0 +1,25 @@
+{
+  "name": "omnirtl-desktop",
+  "version": "1.0.0",
+  "description": "OmniRTL AI - Smart Desktop Launcher & Windows Patcher",
+  "main": "cli.js",
+  "bin": "cli.js",
+  "scripts": {
+    "start": "node cli.js",
+    "build:exe": "pkg . --targets node18-win-x64 --output ../OmniRTL-Setup.exe"
+  },
+  "pkg": {
+    "scripts": [
+      "detector.js",
+      "patcher.js",
+      "../core/engine.js"
+    ],
+    "assets": [
+      "../core/fonts/**/*",
+      "../shared-assets/**/*"
+    ]
+  },
+  "dependencies": {
+    "@electron/asar": "^3.4.1"
+  }
+}
