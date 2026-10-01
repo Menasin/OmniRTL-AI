@@ -1,0 +1,9 @@
+<resources>
+    <style name="Theme.OmniRTL" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#6366F1</item>
+        <item name="colorPrimaryVariant">#4F46E5</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="android:statusBarColor">#0F172A</item>
+        <item name="android:windowBackground">#0F172A</item>
+    </style>
+</resources>

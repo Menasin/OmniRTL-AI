@@ -5,5 +5,7 @@ Thumbs.db
 desktop/node_modules/
 android/app/build/
 android/.gradle/
+android/local.properties
 *.asar.bak
 *.clean_bak
+
